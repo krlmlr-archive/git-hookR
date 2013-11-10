@@ -19,7 +19,7 @@ if [[ ! -d "${HOOKSDIR}" ]]; then
     fatal "$0: ${TARGETDIR} is not a Git working copy"
 fi
 
-SOURCEPATH="$(dirname $(readlink -f $0))/hooks"
+SOURCEPATH="$(dirname $(dirname $(readlink -f $0)))/hooks"
 
 ln -v -s "${SOURCEPATH}"/* "${HOOKSDIR}"
 
