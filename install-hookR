@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+TARGETDIR="${1-.}"
+
+fatal()
+{
+  if [[ -n "$1" ]]; then echo "$1" >> /dev/stderr; fi
+  exit 1
+}
+
+if [[ ! -d "${TARGETDIR}" ]]; then
+    fatal "$0: ${TARGETDIR} is not a directory"
+fi
+
+HOOKSDIR="${TARGETDIR}/.git/hooks"
+if [[ ! -d "${HOOKSDIR}" ]]; then
+    fatal "$0: ${TARGETDIR} is not a Git working copy"
+fi
+
+SOURCEPATH="$(dirname $(readlink -f $0))/hooks"
+
+ln -v -s "${SOURCEPATH}"/* "${HOOKSDIR}"
+
