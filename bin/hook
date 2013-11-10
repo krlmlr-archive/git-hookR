@@ -13,7 +13,7 @@ Run() {
 
 DoRun() {
   if ! Run >> ${LOGFILE} 2>&1; then
-    notify-send -i error "${PKGNAME}: ${test} failed" "Log file: file://${LOGFILE}\n\n${INFO}"
+    notify-send -i error "${PKGNAME}: ${command} failed" "Log file: file://${LOGFILE}\n\n${INFO}"
   else
     rm -rf ${TMPDIR}
   fi
@@ -21,7 +21,7 @@ DoRun() {
 
 Bootstrap() {
   if git branch | egrep "^\* \(no branch, rebasing "; then
-    echo "$0: No ${test} during rebase." >> /dev/stderr
+    echo "$0: No ${command} during rebase." >> /dev/stderr
     exit 0
   fi
   MYSELF=$(basename $0)
@@ -32,7 +32,7 @@ Bootstrap() {
   export INFO=$(git show --oneline --numstat)
   export TMPDIR=$(mktemp -d --tmpdir hookR.${SHA}.XXX)
   export LOGFILE=${TMPDIR}/${MYSELF}.log
-  echo "${MYSELF}: Starting ${test}, results are written to file://${LOGFILE}." >> /dev/stderr
+  echo "${MYSELF}: Starting ${command}, results are written to file://${LOGFILE}." >> /dev/stderr
   {
     echo "$0" "$@"
     echo "${LOG}"
