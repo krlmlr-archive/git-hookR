@@ -2,24 +2,24 @@
 
 set -e
 
-RunTest() {
+Run() {
   export PKGCOPY="${TMPDIR}/${PKGNAME}"
   mkdir ${PKGCOPY}
   tar -x -C "${PKGCOPY}"
   $(dirname $(readlink -f $0))/../bin/test "${PKGCOPY}"
 }
 
-DoRunTest() {
-  if ! RunTest >> ${LOGFILE} 2>&1; then
-    notify-send -i error "${PKGNAME}: Test failed" "Log file: file://${LOGFILE}\n\n${INFO}"
+DoRun() {
+  if ! Run >> ${LOGFILE} 2>&1; then
+    notify-send -i error "${PKGNAME}: test failed" "Log file: file://${LOGFILE}\n\n${INFO}"
   else
     rm -rf ${TMPDIR}
   fi
 }
 
-BootstrapTest() {
+Bootstrap() {
   if git branch | egrep "^\* \(no branch, rebasing "; then
-    echo "$0: No testing during rebase." >> /dev/stderr
+    echo "$0: No test during rebase." >> /dev/stderr
     exit 0
   fi
   MYSELF=$(basename $0)
@@ -37,7 +37,7 @@ BootstrapTest() {
     echo "${INFO}"
   } >> ${LOGFILE}
 
-  git archive ${SHA} | DoRunTest &
+  git archive ${SHA} | DoRun &
 }
 
-BootstrapTest
+Bootstrap
