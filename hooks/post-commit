@@ -1,1 +1,22 @@
-#!/bin/sh
+#!/bin/bash
+
+set -e
+
+RunTest() {
+  PKGDIR="$PWD"
+  PKGNAME=$(basename $PKGDIR)
+  if ! rant -Vs > ${LOGFILE} 2>&1; then
+    notify-send -i error "${PKGNAME}: Test failed" "Log file: file://${LOGFILE}\n\n${INFO}"
+  fi
+}
+
+BootstrapTest() {
+  export LOG=($(git log HEAD^.. --oneline))
+  export SHA=${LOG[0]}
+  export INFO=$(git show --oneline --numstat)
+  export LOGFILE=$(mktemp --tmpdir hookR.${SHA}.XXX.log)
+  echo "$0: Starting test, results are written to file://${LOGFILE}." >> /dev/stderr
+  RunTest &
+}
+
+BootstrapTest
