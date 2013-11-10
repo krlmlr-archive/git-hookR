@@ -6,10 +6,7 @@ RunTest() {
   export PKGCOPY="${TMPDIR}/${PKGNAME}"
   mkdir ${PKGCOPY}
   tar -x -C "${PKGCOPY}"
-  cd "${TMPDIR}"
-  R CMD build "${PKGNAME}" --no-build-vignettes --no-manual
-  R CMD check "${PKGNAME}_"*.*.tar.gz --as-cran --no-build-vignettes --no-manual
-  egrep ^$t "${PKGNAME}.Rcheck/00check.log"
+  $(dirname $(readlink -f $0))/../bin/test "${PKGCOPY}"
 }
 
 DoRunTest() {

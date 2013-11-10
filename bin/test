@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+PKGDIR=$(dirname $1)
+PKGNAME=$(basename $1)
+
+cd "${PKGDIR}"
+R CMD build "${PKGNAME}" --no-build-vignettes --no-manual
+R CMD check "${PKGNAME}_"*.*.tar.gz --as-cran --no-build-vignettes --no-manual
+! egrep "^WARNING" "${PKGNAME}.Rcheck/00check.log"
+
