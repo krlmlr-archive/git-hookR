@@ -21,7 +21,7 @@ DoRunInstall() {
 
 BootstrapInstall() {
   if git branch | egrep "^\* \(no branch, rebasing "; then
-    echo "$0: No testing during rebase." >> /dev/stderr
+    echo "$0: No installing during rebase." >> /dev/stderr
     exit 0
   fi
   MYSELF=$(basename $0)
