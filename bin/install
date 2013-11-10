@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+TMPDIR=$(dirname $1)
+PKGNAME=$(basename $1)
+
+cd "${TMPDIR}"
+R CMD build "${PKGNAME}" --no-build-vignettes --no-manual
+R CMD INSTALL "${PKGNAME}_"*.*.tar.gz
+
