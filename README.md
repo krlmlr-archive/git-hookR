@@ -3,11 +3,11 @@ git-hookR
 
 Hooks for developing R packages. Install with
 
-    ./install-hookR <path-to-package>
+    bin/install-hookR <path-to-package>
 
 or
 
-    <path-to-git-hookR>/install-hookR
+    <path-to-git-hookR>/bin/install-hookR
 
 from your R package directory.  (Works also with a symlink from `~/bin`.)
 
