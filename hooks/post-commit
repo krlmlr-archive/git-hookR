@@ -19,6 +19,10 @@ DoRunTest() {
 }
 
 BootstrapTest() {
+  if git branch | egrep "^\* \(no branch, rebasing "; then
+    echo "$0: No testing during rebase." >> /dev/stderr
+    exit 0
+  fi
   export PKGDIR="$PWD"
   export PKGNAME=$(basename $PKGDIR)
   export LOG=($(git log HEAD^.. --oneline))
