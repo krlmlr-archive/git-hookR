@@ -23,14 +23,15 @@ BootstrapTest() {
     echo "$0: No testing during rebase." >> /dev/stderr
     exit 0
   fi
+  MYSELF=$(basename $0)
   export PKGDIR="$PWD"
   export PKGNAME=$(basename $PKGDIR)
   export LOG=($(git log HEAD^.. --oneline))
   export SHA=${LOG[0]}
   export INFO=$(git show --oneline --numstat)
   export TMPDIR=$(mktemp -d --tmpdir hookR.${SHA}.XXX)
-  export LOGFILE=${TMPDIR}/post-commit.log
-  echo "$0: Starting test, results are written to file://${LOGFILE}." >> /dev/stderr
+  export LOGFILE=${TMPDIR}/${MYSELF}.log
+  echo "${MYSELF}: Starting test, results are written to file://${LOGFILE}." >> /dev/stderr
   {
     echo "$0" "$@"
     echo "${LOG}"
