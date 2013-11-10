@@ -36,7 +36,6 @@ BootstrapTest() {
     echo "$0" "$@"
     echo "${LOG}"
     echo "${INFO}"
-    git branch
   } >> ${LOGFILE}
 
   git archive ${SHA} | DoRunTest &
