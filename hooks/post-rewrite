@@ -1,3 +1,8 @@
 #!/bin/bash
 
+if [[ "$1" == amend ]]; then
+  echo "$(basename $0): Amended commit, will be tested by post-commit hook"
+  exit 0
+fi
+
 . $(dirname $(readlink -f "$0"))/../bin/hook test
