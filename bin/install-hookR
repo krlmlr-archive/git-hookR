@@ -4,7 +4,7 @@
 
 set -e
 
-TARGETDIR="${1-.}"
+TARGET="${1-.}"
 
 fatal()
 {
@@ -12,9 +12,12 @@ fatal()
   exit 1
 }
 
-if [[ ! -d "${TARGETDIR}" ]]; then
-    fatal "$0: ${TARGETDIR} is not a directory"
+if [[ ! -d "${TARGET}" ]]; then
+    fatal "$0: ${TARGET} is not a directory"
 fi
+
+echo "$0: Searching top-level directory in: ${TARGET}" >> /dev/stderr
+TARGETDIR=$(cd "${TARGET}" && git rev-parse --show-toplevel)
 
 HOOKSDIR="${TARGETDIR}/.git/hooks"
 if [[ ! -d "${HOOKSDIR}" ]]; then
