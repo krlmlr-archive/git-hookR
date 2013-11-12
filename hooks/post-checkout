@@ -1,4 +1,6 @@
 #!/bin/bash
+# Part of git-hookR, copyright 2013 Kirill Müller.
+# License: GPL v3.  See http://www.gnu.org/copyleft/gpl.html for details.
 
 if [[ "$3" == 0 ]]; then
   echo "$(basename $0): File checkout, not installing"

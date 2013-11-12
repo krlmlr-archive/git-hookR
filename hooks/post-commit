@@ -1,3 +1,5 @@
 #!/bin/bash
+# Part of git-hookR, copyright 2013 Kirill Müller.
+# License: GPL v3.  See http://www.gnu.org/copyleft/gpl.html for details.
 
 . $(dirname $(readlink -f "$0"))/../bin/hook test
